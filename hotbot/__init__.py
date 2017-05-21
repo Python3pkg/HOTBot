@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import httplib2
 import os
 import sys
@@ -21,7 +21,7 @@ client_secret.json should be placed in ~/.hotbot
 import datetime
 import readline
 import argparse
-from jsonconf import jsonconf
+from .jsonconf import jsonconf
 import uuid
 from random import randint
 from croniter import croniter
@@ -59,7 +59,7 @@ def default_input(prompt, default=None):
     prompt += ": "
     readline.set_pre_input_hook(pre_input_hook)
     try:
-        return raw_input(prompt)
+        return input(prompt)
     finally:
         readline.set_pre_input_hook(None)
 
@@ -176,7 +176,7 @@ class HOTBot(object):
     def _get_loc_bins(self):
         # sort into bins exclusively
         bins = {'*': []}
-        for k, l in self.event_conf.locations.iteritems():
+        for k, l in self.event_conf.locations.items():
             t = l['tag'].strip().lower()
             if not t:
                 t = '*'
@@ -492,7 +492,7 @@ class HOTBot(object):
         for c in cals:
             id_list.append(c)
             print("{}: {}".format(len(id_list), cals[c]))
-        i = raw_input("Choice: ")
+        i = input("Choice: ")
         try:
             i = int(float(i))
             cal_id = id_list[i - 1]
@@ -563,7 +563,7 @@ class HOTBot(object):
         cal_id = self.event_conf.host_cal
         event["summary"] = name
         event['attendees'] = []
-        for _, g in self.event_conf.guests.iteritems():
+        for _, g in self.event_conf.guests.items():
             event['attendees'].append(g)
         event['location'] = location
         event["description"] = description

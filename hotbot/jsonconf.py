@@ -32,7 +32,7 @@ class jsdict(dict):
     #Optionally overwrite keys that do exist
     def upgrade(self, a, overwrite=False):
         a = jsdict(a)
-        for k, v in a.items():
+        for k, v in list(a.items()):
             if k not in self or overwrite:
                 self[k] = v
         return self
